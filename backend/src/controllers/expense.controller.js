@@ -1,18 +1,50 @@
-    import Expense from "../models/expense.model.js";
+import Expense from "../models/expense.model.js";
 
-    export const addExpense = async (req, res) => {
-        const { emoji, category, amount, note, date, type } = req.body;
-        try {
-            if (!amount) return res.status(401).json({message: "Amount is required"});
-            if (!type) return res.status(401).json({message: "Expense type is required"});
-            if (!date) return res.status(401).json({message: "Date is required"});
+export const addEntry = async (req, res) => {
+    const { emoji, category, amount, note, date, type } = req.body;
+    try {
+        if (!amount) return res.status(400).json({message: "Amount is required"});
+        if (!type) return res.status(400).json({message: "Expense type is required"});
+        if (!date) return res.status(400).json({message: "Date is required"});
 
-            const newExpense = new Expense({emoji, category, amount, note, date, type, user: req.user._id});
-            await newExpense.save();
-            res.status(201).json({ message: "Expense added successfully", expense: newExpense });                
-        } catch (error) {
-            console.log("Error in addExpense controller: ", error.message);
-            res.status(500).json({message: "Internal Server Error"});          
-        }
+        const newExpense = new Expense({emoji, category, amount, note, date, type, user: req.user._id});
+        await newExpense.save();
+        res.status(201).json({ message: "Expense added successfully", expense: newExpense });                
+    } catch (error) {
+        console.log("Error in addExpense controller: ", error.message);
+        res.status(500).json({message: "Internal Server Error"});          
+    }
 
-    };
+};
+
+export const fetchAllEntries = async (req, res) => {
+    const { type } = req.params
+    try {
+        const allExpense = await Expense.find({
+            user: req.user._id,
+            type
+        });
+
+        if (allExpense.length === 0) return res.status(200).json({message: "No entries till now"});
+
+        res.status(200).json({allExpense});        
+    } catch (error) {
+        console.log("Error in fetchAllEntries controller:", error.message);
+        res.status(500).json({message: "Internal Server Error"});        
+    }
+};
+
+export const deleteEntry = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const entry = await Expense.findByIdAndDelete(id);
+
+        if (!entry) return res.status(404).json({message: "No such entry"});
+
+        res.status(200).json({message: "Entry deleted Successfully"});
+    } catch (error) {
+        console.log("Error in deleteEntry controller:", error.message);
+        res.status(500).json({message: "Internal Server Error"});           
+    }
+};
