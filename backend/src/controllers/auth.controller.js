@@ -1,15 +1,21 @@
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js"
 import bcrypt from "bcryptjs";
+import cloudinary from "../lib/cloudinary.js";
 
 export const signup = async (req, res) => {
-    const { email, fullName, password, profilePic } = req.body;
+    let { email, fullName, password, profilePic } = req.body;
     try {
         if (!fullName || !email || !password) return res.status(400).json({message: "All fields are required"});
         if (password.length < 6) return res.status(400).json({message: "Password should contain at least 6 character"});
 
         const user = await User.findOne({email});
         if(user) return res.status(400).json({message: "User with this email already exists"});
+
+        if(profilePic) {
+            const uploadResponse = await cloudinary.uploader.upload(profilePic);
+            profilePic = uploadResponse.secure_url;
+        }
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -57,12 +63,52 @@ export const login = async (req, res) => {
     }
 };
 
-export const logout = async(req, res) => {
+export const logout = async (req, res) => {
     try {
         res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });   
         res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
         console.error("Logout Error:", error.stack);
         res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+export const updateProfile = async (req, res) => {
+    try {
+        const { fullName, profilePic} = req.body;
+        const userId = req.user._id;
+
+        if (!profilePic) return res.status(400).json({ message: "Profile pic is required" });
+
+        const uploadResponse = await cloudinary.uploader.upload(profilePic);
+        const updatedUser = await User.findByIdAndUpdate(
+          userId,
+          { profilePic: uploadResponse.secure_url,
+            ...(fullName && { fullName }) 
+           },
+          { new: true }
+        );
+
+        res.status(200).json({updatedUser});
+        
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });        
+    }    
+};
+
+export const checkAuth = (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        res.status(200).json({
+            _id: req.user._id,
+            fullName: req.user.fullName,
+            email: req.user.email,
+            profilePic: req.user.profilePic,
+        });
+    } catch (error) {
+        console.log("Error in checkAuth Controller", error.message);
+        res.status(500).json({ message: "Internal Server Error" });        
     }
 };
