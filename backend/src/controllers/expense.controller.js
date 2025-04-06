@@ -48,3 +48,31 @@ export const deleteEntry = async (req, res) => {
         res.status(500).json({message: "Internal Server Error"});           
     }
 };
+
+export const editEntry = async (req, res) => {
+    const { id } = req.params;
+    const { category, emoji, amount, date, note, type } = req.body;
+
+    try {
+        const existingEntry = await Expense.findById(id);
+        if (!existingEntry) return res.status(404).json({ message: "No such entry found" });
+
+        const updatedFields = {
+            category: category || existingEntry.category,
+            emoji: emoji || existingEntry.emoji,
+            amount: amount || existingEntry.amount,
+            date: date || existingEntry.date,
+            note: note || existingEntry.note,
+            type: type || existingEntry.type
+        };
+
+        const editedEntry = await Expense.findByIdAndUpdate(id, updatedFields, { new: true });
+
+        res.status(200).json({ editedEntry, message: "Entry edited successfully" });        
+    } catch (error) {
+        console.log("Error in editEntry controller:", error.message);
+        res.status(500).json({ message: "Internal Server Error" }); 
+    }
+};
+
+// todo: summary
