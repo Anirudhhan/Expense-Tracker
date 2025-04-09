@@ -74,5 +74,3 @@ export const editEntry = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" }); 
     }
 };
-
-// todo: summary
