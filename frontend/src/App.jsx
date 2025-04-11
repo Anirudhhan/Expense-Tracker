@@ -1,12 +1,27 @@
-import LoginPage from "./pages/LoginPage"
+import React, { useEffect} from "react";
+import LoginPage from "./pages/LoginPage";
+import { Routes, Route, Navigate} from "react-router-dom";
+import { useAuthStore } from "./store/useAuthStore";
+import HomePage from "./pages/HomePage";
+import { Toaster } from "react-hot-toast";
 
-function App() {
+const App = () => {
 
+  const { checkAuth, authUser } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth()  
+  }, [checkAuth])
+  
   return (
     <div>
-      <LoginPage/>
+      <Routes>
+        <Route path="/" element={authUser? <HomePage/>: <Navigate to="login"/> } />
+        <Route path="/login" element={!authUser? <LoginPage/>: <Navigate to="/"/> } />
+      </Routes>
+      <Toaster />
     </div>
   )
 }
 
-export default App
+export default App;

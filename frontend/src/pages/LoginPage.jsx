@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Activity, Mail, Eye, EyeOff, Lock } from "lucide-react";
+import { Activity, Mail, Eye, EyeOff, Lock, Ellipsis } from "lucide-react";
+import { useAuthStore } from '../store/useAuthStore';
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -8,11 +9,11 @@ function LoginPage() {
     password: "",
   });
 
-  // TODO: AuthStore
-
+  const { isLoggingIn, login } = useAuthStore(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    login(formData);
   };
 
   return (
@@ -66,7 +67,7 @@ function LoginPage() {
                     className="absolute inset-y-0 right-0 pr-3 flex items-center"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                  {showPassword ? (
+                  {!showPassword ? (
                     <EyeOff className="h-5 w-5 text-base-content/40" />
                   ) : (
                     <Eye className="h-5 w-5 text-base-content/40" />
@@ -75,7 +76,9 @@ function LoginPage() {
                 </div>
               </div>
               <button type='submit' className='btn w-full btn-primary'>
-                  Sign in
+                  {isLoggingIn ? (
+                    <Ellipsis className="h5 w5 animate-pulse"/>
+                  ): "Sign in"}
               </button>
               
               {/* TODO: Implement this later */}
