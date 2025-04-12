@@ -4,6 +4,7 @@ import { Routes, Route, Navigate} from "react-router-dom";
 import { useAuthStore } from "./store/useAuthStore";
 import HomePage from "./pages/HomePage";
 import { Toaster } from "react-hot-toast";
+import SignUpPage from "./pages/SignUpPage";
 
 const App = () => {
 
@@ -18,6 +19,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={authUser? <HomePage/>: <Navigate to="login"/> } />
         <Route path="/login" element={!authUser? <LoginPage/>: <Navigate to="/"/> } />
+        <Route path="/signup" element={!authUser? <SignUpPage/>: <Navigate to="/"/> } /> 
       </Routes>
       <Toaster />
     </div>

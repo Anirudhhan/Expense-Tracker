@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Activity, Mail, Eye, EyeOff, Lock, Ellipsis } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useAuthStore } from '../store/useAuthStore';
+import toast from "react-hot-toast";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +15,12 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.email || !formData.password) {
+      toast.error("Please fill all the fields!");
+      return;
+    }
+
     login(formData);
   };
 
@@ -86,6 +94,12 @@ function LoginPage() {
                   Sign in with Google
               </button>
             </form>
+
+            <div className="text-center">
+              <p>Don't have an account? {" "}
+                  <Link to="/signup" className="link link-primary">Sign up</Link>
+              </p>
+            </div>
 
           </div>
 
