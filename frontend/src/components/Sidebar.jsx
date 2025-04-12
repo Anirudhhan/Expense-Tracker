@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { BanknoteArrowDown, BanknoteArrowUp, LayoutDashboard, LogOut, Settings, Menu, X } from 'lucide-react'
-import { useAuthStore } from '../store/useAuthStore'
+import React, { useState, useEffect } from 'react';
+import { BanknoteArrowDown, BanknoteArrowUp, LayoutDashboard, LogOut, Settings, Menu, X } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from '../store/useAuthStore';
 
 function Sidebar() {
     const { authUser, logout } = useAuthStore();
@@ -10,6 +11,9 @@ function Sidebar() {
     const [settings, setSettings] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+
+    const navigate = useNavigate();
+
 
     // Check if the screen is mobile sized
     useEffect(() => {
@@ -37,6 +41,7 @@ function Sidebar() {
         setExpense(false);
         setSettings(false);
         if (isMobile) setIsOpen(false);
+        navigate("/");
     }
 
     const handleIncome = () => {
@@ -45,6 +50,7 @@ function Sidebar() {
         setExpense(false);
         setSettings(false);
         if (isMobile) setIsOpen(false);
+        navigate("/income");
     }
 
     const handleExpense = () => {
@@ -53,6 +59,7 @@ function Sidebar() {
         setExpense(true);
         setSettings(false);
         if (isMobile) setIsOpen(false);
+        navigate("/expense");
     }
 
     const handleSettings = () => {
@@ -61,6 +68,7 @@ function Sidebar() {
         setExpense(false);
         setSettings(true);
         if (isMobile) setIsOpen(false);
+        navigate("/settings");
     }
 
     // Mobile hamburger menu
