@@ -30,11 +30,6 @@ function LoginPage() {
         <div className='flex flex-col justify-center items-center p-6 sm:p-12'>
           <div className="w-full max-w-md space-y-4">
             
-              <div
-                className="w-12 h-12 rounded-xl bg-primary/10 flex items-center ml-50 mb-5 justify-center group-hover:bg-primary/20 transition-colors"
-                >
-                  <Activity className="w-6 h-6 text-primary" />
-                </div>
               <h1 className='text-3xl font-bold'>Welcome Back</h1>
               <p className='text-base-content/40'>Please enter your details</p>
 
