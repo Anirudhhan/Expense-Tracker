@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useExpenseStore } from '../../store/useExpenseStore';
 
 
-function IncomeOverview() {
+function AddEntryModal() {
   const { addEntry } = useExpenseStore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -206,4 +206,4 @@ function IncomeOverview() {
   )
 }
 
-export default IncomeOverview;
+export default AddEntryModal;

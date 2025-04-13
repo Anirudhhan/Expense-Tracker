@@ -24,7 +24,7 @@ function RecentTransaction() {
       ) : (
         recentTransactions.slice(0, 5).map((transaction) => (
           <div key={transaction._id} className="group relative flex items-center gap-4 mt-4 p-3 rounded-lg hover:bg-gray-100/60">
-            <div className='w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center'>
+            <div className='w-12 h-12 text-2xl rounded-full bg-gray-300 flex items-center justify-center'>
               {transaction.emoji}
             </div>
             <div className="flex flex-col">

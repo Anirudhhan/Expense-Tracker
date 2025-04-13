@@ -17,5 +17,18 @@ export const useExpenseStore = create((set) => ({
         } finally {
             set({ isRecentTransactionLoading: false });
         }
+    },
+
+    addEntry: async (data) => {
+        try {
+            const res = await axiosInstance.post("/expense/add-entry", data);
+            toast.success(res.data.message);
+            set((state) => ({ recentTransactions: [res.data.expense, ...state.recentTransactions] }));
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+
     }
+
+
 }));

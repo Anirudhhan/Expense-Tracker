@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const expenseSchema = new mongoose.Schema({
     emoji: {
         type: String,
-        default: ""
+        default: "🤷‍♂️"
     },
     category: {
         type: String,
