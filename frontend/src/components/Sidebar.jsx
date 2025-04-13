@@ -133,7 +133,7 @@ function Sidebar() {
             {mobileToggle}
             
             {/* Desktop Sidebar - always visible on larger screens */}
-            <div className='hidden md:block bg-black/10 h-screen w-72 align-items-center px-6'>
+            <div className='hidden md:block bg-black/10 h-screen w-72 align-items-center px-6 fixed top-0 left-0 z-50'>
                 {sidebarContent}
             </div>
             

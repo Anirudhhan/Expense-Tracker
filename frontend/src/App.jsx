@@ -10,13 +10,18 @@ import DashboardPage from "./pages/DashboardPage";
 import IncomePage from "./pages/IncomePage";
 import ExpensePage from "./pages/ExpensePage";
 import SettingsPage from "./pages/SettingsPage";
+import { useExpenseStore } from "./store/useExpenseStore";
+import { Loader } from "lucide-react";
 
 const App = () => {
-  const { checkAuth, authUser } = useAuthStore();
+  const { isCheckingAuth, checkAuth, authUser } = useAuthStore();
   const [isMobile, setIsMobile] = useState(false);
+
+  const { getDashboardData} = useExpenseStore();
 
   useEffect(() => {
     checkAuth();
+    getDashboardData();
     
     // Check for mobile screen size
     const checkIsMobile = () => {
@@ -27,12 +32,19 @@ const App = () => {
     window.addEventListener('resize', checkIsMobile);
     
     return () => window.removeEventListener('resize', checkIsMobile);
-  }, [checkAuth]);
+  }, [checkAuth, getDashboardData]);
+
+
+  if ( isCheckingAuth && !authUser ) return (
+    <div className='flex items-center justify-center h-screen'>
+      <Loader className="size-10 animate-spin" />
+    </div>
+  )
   
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {authUser && <Sidebar />}
-      <div className={`flex-1 ${authUser && !isMobile ? "md:ml-0" : ""}`}>
+      <div className={`flex-1 ${authUser && !isMobile ? "md:ml-72" : ""}`}>
         {/* <Navbar /> */}
         <main className="">
           <Routes>

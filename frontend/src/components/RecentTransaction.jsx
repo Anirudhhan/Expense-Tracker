@@ -1,6 +1,6 @@
 import React from 'react';
 import { useExpenseStore } from '../store/useExpenseStore';
-import {LoaderPinwheel} from 'lucide-react';
+import {Loader} from 'lucide-react';
 
 
 function RecentTransaction() {
@@ -10,9 +10,9 @@ function RecentTransaction() {
   return (
     <div>
         <h1>Recent Transactions</h1>
-        {!isRecentTransactionLoading ? (
-            <div className="content-center flex justify-center items-center h-full">
-            <LoaderPinwheel className='animate-spin w-20 h-20' />
+        {isRecentTransactionLoading ? (
+            <div className="content-center flex justify-center items-center h-full mt-35">
+              <Loader className='animate-spin w-10 h-10' />
             </div>) : ""
         }
     </div>
