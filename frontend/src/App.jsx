@@ -42,7 +42,7 @@ const App = () => {
   )
   
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen" >
       {authUser && <Sidebar />}
       <div className={`flex-1 ${authUser && !isMobile ? "md:ml-72" : ""}`}>
         {/* <Navbar /> */}

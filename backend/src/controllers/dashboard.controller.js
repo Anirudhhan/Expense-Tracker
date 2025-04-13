@@ -6,7 +6,7 @@ export const getDashboardData = async (req, res) => {
         const totalIncomeTransactions = await Expense.find({ user: userId, type: "income" }).sort({ date: -1 });
         const totalExpensesTransactions = await Expense.find({ user: userId, type: "expense" }).sort({ date: -1 });
         const recentTransactions = await Expense.find({ user: userId }).sort({ date: -1 }).limit(10);;
-        
+    
         const totalIncome = totalIncomeTransactions.reduce((acc, curr) => acc + curr.amount, 0);
         const totalExpenses = totalExpensesTransactions.reduce((acc, curr) => acc + curr.amount, 0);
 
