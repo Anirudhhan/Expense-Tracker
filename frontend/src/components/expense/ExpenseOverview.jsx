@@ -14,7 +14,7 @@ function IncomeOverview() {
   return (
     <div>
     <div className="flex justify-between items-center">
-      <h1 className='font-medium text-xl'>Income Overview</h1>
+      <h1 className='font-medium text-xl'>Expense Overview</h1>
 
       <div className="relative cursor-pointer">
         <div className="absolute inset-y-0 left-0 pl-1 flex items-center">
@@ -24,15 +24,15 @@ function IncomeOverview() {
           onClick={handleOpenModal} 
           className="cursor-pointer bg-primary/35 rounded-md text-primary font-medium w-full pl-6 pr-3 py-1"
         >
-          Add Income
+          Add Expense
         </button>
       </div>
 
     </div>
       <AddEntryModal 
         ref={addEntryModalRef}
-        type="income" 
-        name="Add Income" 
+        type="expense" 
+        name="Add Expense" 
       />
     </div>
   )

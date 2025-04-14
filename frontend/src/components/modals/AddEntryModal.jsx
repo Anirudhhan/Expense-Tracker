@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { Plus } from 'lucide-react';
 import EmojiPicker from 'emoji-picker-react';
 import toast from "react-hot-toast";
 import { useExpenseStore } from '../../store/useExpenseStore';
 
-
-function AddEntryModal() {
+const AddEntryModal = forwardRef((props, ref) => {
   const { addEntry } = useExpenseStore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,7 +15,7 @@ function AddEntryModal() {
     category: "",
     amount: "",
     note: "",
-    type: "income",
+    type: `${props.type}`,
     date: new Date().toISOString().split('T')[0], // Format as YYYY-MM-DD
   });
 
@@ -28,11 +27,16 @@ function AddEntryModal() {
       category: "",
       amount: "",
       note: "",
-      type: "income",
+      type: `${props.type}`,
       date: new Date().toISOString().split('T')[0],
     });
     setIsModalOpen(true);
   };
+
+  // Expose the openAddIncomeModal function via ref
+  useImperativeHandle(ref, () => ({
+    openModal: openAddIncomeModal
+  }));
 
   const closeAddIncomeModal = () => {
     setIsModalOpen(false);
@@ -72,26 +76,12 @@ function AddEntryModal() {
   };
 
   return (
-    <div className="flex justify-between items-center">
-      <h1 className='font-medium text-xl'>Income Overview</h1>
-
-      <div className="relative cursor-pointer">
-        <div className="absolute inset-y-0 left-0 pl-1 flex items-center">
-          <Plus className="h-5 w-5 text-base-content/40 text-primary font-medium" />
-        </div>
-        <button 
-          onClick={openAddIncomeModal} 
-          className="cursor-pointer bg-primary/35 rounded-md text-primary font-medium w-full pl-6 pr-3 py-1"
-        >
-          Add Income
-        </button>
-      </div>
-
+    <div className="">
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-medium">Add Income</h2>
+              <h2 className="text-xl font-medium">{props.name}</h2>
               <button 
                 onClick={closeAddIncomeModal}
                 className="text-gray-500 hover:text-gray-700"
@@ -203,7 +193,7 @@ function AddEntryModal() {
         </div>
       )}
     </div>
-  )
-}
+  );
+});
 
 export default AddEntryModal;
