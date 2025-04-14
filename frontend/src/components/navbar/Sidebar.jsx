@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BanknoteArrowDown, BanknoteArrowUp, LayoutDashboard, LogOut, Settings, Menu, X } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuthStore } from '../../store/useAuthStore';
 
 function Sidebar() {
     const { authUser, logout } = useAuthStore();

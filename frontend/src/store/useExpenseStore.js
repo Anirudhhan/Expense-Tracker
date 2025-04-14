@@ -6,12 +6,15 @@ export const useExpenseStore = create((set) => ({
     isRecentTransactionLoading: false,
     dashboardData: null,
     recentTransactions: [],
+    totalIncomeTransactions: [],
 
     getDashboardData: async () => {
         set({ isRecentTransactionLoading: true });
         try {
             const res = await axiosInstance.get("/dashboard");
-            set({ dashboardData: res.data, recentTransactions: res.data.recentTransactions });
+            set({ dashboardData: res.data, 
+                recentTransactions: res.data.recentTransactions,
+            totalIncomeTransactions: res.data.income.transactions });
         } catch (error) {
             toast.error(error.response.data.message);
         } finally {
