@@ -1,11 +1,11 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import EmojiPicker from 'emoji-picker-react';
 import toast from "react-hot-toast";
 import { useExpenseStore } from '../../store/useExpenseStore';
 
 const AddEntryModal = forwardRef((props, ref) => {
-  const { addEntry } = useExpenseStore();
+  const { addEntry, editEntry } = useExpenseStore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -19,16 +19,23 @@ const AddEntryModal = forwardRef((props, ref) => {
     date: new Date().toISOString().split('T')[0], // Format as YYYY-MM-DD
   });
 
+  useEffect(() => {
+    // Update selectedEmoji when props.emoji changes
+    if (props.emoji) {
+      setSelectedEmoji(props.emoji);
+    }
+  }, [props.emoji]);
+
   const openAddIncomeModal = () => {
-    // Reset form when opening modal
-    setSelectedEmoji(null);
+    // Reset form when opening modal with provided data or defaults
+    setSelectedEmoji(props.emoji || null);
     setFormData({
-      emoji: "",
-      category: "",
-      amount: "",
-      note: "",
-      type: `${props.type}`,
-      date: new Date().toISOString().split('T')[0],
+      emoji: props.emoji || "",
+      category: props.category || "",
+      amount: props.amount || "",
+      note: props.note || "",
+      type: props.type || "income",
+      date: props.date || new Date().toISOString().split('T')[0],
     });
     setIsModalOpen(true);
   };
@@ -61,16 +68,18 @@ const AddEntryModal = forwardRef((props, ref) => {
     });
   };
 
-  const addIncome = async() => {
+  const saveEntry = async() => {
     // Validate form fields
     if (!formData.category.trim() || !formData.amount) {
       toast.error("Please fill in all required fields");
       return;
     }
     
-    console.log(formData.emoji);
-    await addEntry(formData);
-    // await addEntry(formData);
+    if (props.edit) {
+      await editEntry(formData, props.id);
+    } else {
+      await addEntry(formData);
+    }
     
     closeAddIncomeModal();
   };
@@ -81,7 +90,7 @@ const AddEntryModal = forwardRef((props, ref) => {
         <div className="fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-medium">{props.name}</h2>
+              <h2 className="text-xl font-medium">{props.name || "Add Entry"}</h2>
               <button 
                 onClick={closeAddIncomeModal}
                 className="text-gray-500 hover:text-gray-700"
@@ -152,7 +161,7 @@ const AddEntryModal = forwardRef((props, ref) => {
               </div>
 
               <div className="flex flex-col">
-                <label className="mb-1 text-sm">note</label>
+                <label className="mb-1 text-sm">Note</label>
                 <input 
                   name="note"
                   type="text" 
@@ -182,7 +191,7 @@ const AddEntryModal = forwardRef((props, ref) => {
                   Cancel
                 </button>
                 <button 
-                  onClick={addIncome}
+                  onClick={saveEntry}
                   className="px-4 py-2 bg-primary text-white rounded-md"
                 >
                   Save

@@ -9,6 +9,6 @@ router.get("/fetch-entries/:type", protectRoute, fetchAllEntries);
 
 router.delete("/delete/:id", protectRoute, deleteEntry);
 
-router.post("/edit/:id", protectRoute, editEntry);
+router.put("/edit/:id", protectRoute, editEntry);
 
 export default router;

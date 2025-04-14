@@ -25,7 +25,9 @@ function IncomeOverview() {
 
   const { totalIncomeTransactions } = useExpenseStore();
 
-  const data = totalIncomeTransactions.map((transaction) => ({
+  const data = (totalIncomeTransactions || [])
+  .filter(transaction => transaction && transaction.category && transaction.amount && transaction.date)
+  .map((transaction) => ({
     category: transaction.category,
     amount: transaction.amount,
     date: new Date(transaction.date).toLocaleDateString("en-IN", {
@@ -33,7 +35,9 @@ function IncomeOverview() {
       month: "long",
       year: "numeric",
     }),
-  }));
+  }))
+  .reverse();
+
 
   return (
     <div>

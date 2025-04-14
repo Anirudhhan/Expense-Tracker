@@ -10,7 +10,7 @@ function IncomePage() {
         <IncomeOverview />
       </div>
 
-      <div className="bg-white rounded-xl p-4 shadow-sm mt-9">
+      <div className="bg-white rounded-xl p-4 shadow-sm mt-9 px-10 pt-10">
         {/* Navigation-like header */}
         <div className="flex justify-between items-center pb-3 mb-4">
           <h1 className="font-medium text-xl">Incomes</h1>
@@ -25,11 +25,11 @@ function IncomePage() {
         </div>
 
         {/* Two columns of TotalIncome components */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mx-6">
-          <div className=" rounded-lg p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className=" rounded-lg ">
             <TotalIncome start="0" end="5" />
           </div>
-          <div className="rounded-lg p-4">
+          <div className="rounded-lg">
             <TotalIncome start="5" end="10" />
           </div>
         </div>
