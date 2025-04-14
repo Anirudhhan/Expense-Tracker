@@ -37,9 +37,19 @@ export const useExpenseStore = create((set) => ({
 
     editEntry: async (data, id) => {
         try {
+            console.log("id", id);
+            // console.log("transaction._id", transaction._id);
+            console.log("data._id", data._id);
             const res = await axiosInstance.put(`/expense/edit/${id}`, data);
             toast.success(res.data.message);
-            set((state) => ({ recentTransactions: state.recentTransactions.map(transaction => transaction._id === data._id ? res.data.expense : transaction) }));
+            set((state) => ({
+                recentTransactions: state.recentTransactions.map(transaction => {
+                  console.log("transaction._id", transaction._id); // Log the transaction ID
+                  return transaction._id === data._id ? res.data.expense : transaction;
+                })
+              }));
+              
+            // set((state) => ({ recentTransactions: state.recentTransactions.map(transaction => transaction._id === data._id ? res.data.expense : transaction) }));
             set((state) => ({ totalIncomeTransactions: state.totalIncomeTransactions.map(transaction => transaction._id === data._id ? res.data.expense : transaction) }));
         } catch (error) {
             toast.error(error.response.data.message);

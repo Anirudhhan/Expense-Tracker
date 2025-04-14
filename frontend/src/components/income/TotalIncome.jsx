@@ -19,6 +19,7 @@ function TotalIncome(props) {
       note: transaction.note || "",
       date: transaction.date ? new Date(transaction.date).toISOString().split('T')[0] : ""
     });
+    console.log("emoji", editData?.emoji);
     
     // Small delay to ensure state is updated before opening modal
     setTimeout(() => {
@@ -67,7 +68,7 @@ function TotalIncome(props) {
                   onClick={() => handleOpenModal(transaction)} 
                   className="w-5 h-5 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-100" 
                 />
-                {isEntryDeleting && transaction._id === deleteId && (
+                {isEntryDeleting && (
                   <Loader className="w-5 h-5 animate-spin" />
                 )}
                 <div className="flex items-center justify-center gap-2 w-20 rounded-sm h-7 bg-green-200 text-green-600">
