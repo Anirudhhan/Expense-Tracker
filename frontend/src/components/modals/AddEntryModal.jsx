@@ -88,12 +88,12 @@ const AddEntryModal = forwardRef((props, ref) => {
     <div className="">
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+          <div className="bg-base-100 p-6 rounded-lg shadow-lg max-w-md w-full">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-medium">{props.name || "Add Entry"}</h2>
               <button 
                 onClick={closeAddIncomeModal}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-base-500 hover:text-base-700 cursor-pointer"
               >
                 ×
               </button>
@@ -186,13 +186,13 @@ const AddEntryModal = forwardRef((props, ref) => {
               <div className="flex justify-end space-x-2 mt-4">
                 <button 
                   onClick={closeAddIncomeModal}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700"
+                  className="px-4 py-2 border border-base-300 rounded-md text-base-700 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button 
                   onClick={saveEntry}
-                  className="px-4 py-2 bg-primary text-white rounded-md"
+                  className="px-4 py-2 bg-primary text-white rounded-md cursor-pointer"
                 >
                   Save
                 </button>
