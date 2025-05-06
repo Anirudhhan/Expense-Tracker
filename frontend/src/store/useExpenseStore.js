@@ -7,6 +7,7 @@ export const useExpenseStore = create((set) => ({
     dashboardData: null,
     recentTransactions: [],
     totalIncomeTransactions: [],
+    totalExpenseTransactions: [],
     isEntryDeleting: false,
 
     getDashboardData: async () => {
@@ -15,7 +16,8 @@ export const useExpenseStore = create((set) => ({
             const res = await axiosInstance.get("/dashboard");
             set({ dashboardData: res.data, 
                 recentTransactions: res.data.recentTransactions,
-            totalIncomeTransactions: res.data.income.transactions });
+            totalIncomeTransactions: res.data.income.transactions,
+            totalExpenseTransactions: res.data.expense.transactions });
         } catch (error) {
             toast.error(error.response.data.message);
         } finally {
@@ -28,6 +30,7 @@ export const useExpenseStore = create((set) => ({
             const res = await axiosInstance.post("/expense/add-entry", data);
             toast.success(res.data.message);
             set((state) => ({ recentTransactions: [res.data.expense, ...state.recentTransactions] }));
+            set((state) => ({ totalExpenseTransactions: [res.data.expense, ...state.totalExpenseTransactions] }));
             set((state) => ({ totalIncomeTransactions: [res.data.expense, ...state.totalIncomeTransactions] }));
         } catch (error) {
             toast.error(error.response.data.message);
@@ -50,7 +53,15 @@ export const useExpenseStore = create((set) => ({
               }));
               
             // set((state) => ({ recentTransactions: state.recentTransactions.map(transaction => transaction._id === data._id ? res.data.expense : transaction) }));
-            set((state) => ({ totalIncomeTransactions: state.totalIncomeTransactions.map(transaction => transaction._id === data._id ? res.data.expense : transaction) }));
+            set((state) => ({
+                totalExpenseTransactions: state.totalExpenseTransactions.map(transaction =>
+                  transaction._id === data._id ? res.data.expense : transaction
+                ),
+                totalIncomeTransactions: state.totalIncomeTransactions.map(transaction =>
+                  transaction._id === data._id ? res.data.expense : transaction
+                )
+              }));
+              
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -62,6 +73,7 @@ export const useExpenseStore = create((set) => ({
             const res = await axiosInstance.delete(`/expense/delete/${id}`);
             set((state) => ({ recentTransactions: state.recentTransactions.filter(transaction => transaction._id !== id) }));
             set((state) => ({ totalIncomeTransactions: state.totalIncomeTransactions.filter(transaction => transaction._id !== id) }));
+            set((state) => ({ totalExpenseTransactions: state.totalExpenseTransactions.filter(transaction => transaction._id !== id) }));
             toast.success(res.data.message);
         } catch (error) {
             toast.error(error.response.data.message);

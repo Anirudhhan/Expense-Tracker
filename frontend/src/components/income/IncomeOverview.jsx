@@ -4,7 +4,6 @@ import AddEntryModal from "../modals/AddEntryModal";
 import {
   BarChart,
   Bar,
-  Rectangle,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -14,6 +13,7 @@ import {
   Cell,
 } from "recharts";
 import { useExpenseStore } from "../../store/useExpenseStore";
+
 
 function IncomeOverview() {
   const addEntryModalRef = useRef(null);
