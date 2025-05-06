@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useExpenseStore } from '../../store/useExpenseStore';
-import { Loader, SquarePen, Trash2 } from 'lucide-react';
 import AddEntryModal from "../modals/AddEntryModal";
+import { Loader, SquarePen, Trash2, AlertCircle, X } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 function TotalIncome(props) {
   const { isRecentTransactionLoading, totalIncomeTransactions, isEntryDeleting, deleteEntry } = useExpenseStore();
@@ -30,10 +31,67 @@ function TotalIncome(props) {
   const displayedTransactions = totalIncomeTransactions.slice(props.start, props.end);
   const isLastBatch = displayedTransactions.length < 5;
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this entry?")) {
-      await deleteEntry(id);
-    }
+  const handleDelete = (id) => {
+    toast((t) => (
+      <div className="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-lg border border-gray-100 max-w-2xl animate-in fade-in slide-in-from-top-5">
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center rounded-full bg-red-50 p-2">
+              <AlertCircle className="w-5 h-5 text-red-500" />
+            </div>
+            <div className="font-semibold text-gray-800">Confirm Deletion</div>
+          </div>
+          <button 
+            onClick={() => toast.dismiss(t.id)}
+            className="p-1 rounded-full hover:bg-gray-100 transition-colors"
+          >
+            <X className="w-4 h-4 text-gray-400" />
+          </button>
+        </div>
+        
+        <div className="text-gray-600 pl-10">
+          Are you sure you want to delete this entry? 
+        </div>
+        
+        <div className="flex justify-end gap-3 mt-1">
+          <button
+            className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            Cancel
+          </button>
+          <button
+            className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 transition-colors flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+            onClick={() => {
+              toast.dismiss(t.id);
+              deleteEntry(id).then(() => {
+                toast.success('Entry deleted successfully', {
+                  duration: 3000,
+                  position: 'bottom-right',
+                  className: 'bg-white',
+                  iconTheme: {
+                    primary: '#10B981',
+                    secondary: '#ECFDF5',
+                  },
+                });
+              });
+            }}
+          >
+            <Trash2 className="w-4 h-4" />
+            Delete
+          </button>
+        </div>
+      </div>
+    ), {
+      duration: 20000,
+      position: 'top-center',
+      style: {
+        background: 'transparent',
+        boxShadow: 'none',
+        border: 'none',
+        padding: 0,
+      },
+    });
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useExpenseStore } from '../../store/useExpenseStore';
-import { Loader, SquarePen, Trash2, AlertCircle, X } from 'lucide-react';
 import AddEntryModal from "../modals/AddEntryModal";
+import { Loader, SquarePen, Trash2, AlertCircle, X } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 function TotalIncome(props) {
