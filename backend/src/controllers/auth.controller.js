@@ -106,6 +106,7 @@ export const checkAuth = (req, res) => {
             fullName: req.user.fullName,
             email: req.user.email,
             profilePic: req.user.profilePic,
+            createdAt: req.user.createdAt,
         });
     } catch (error) {
         console.log("Error in checkAuth Controller", error.message);

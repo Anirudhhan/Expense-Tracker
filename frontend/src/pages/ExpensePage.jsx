@@ -6,16 +6,16 @@ import { MoveRight } from 'lucide-react'
 function ExpensePage() {
   return (
     <div className='bg-black/5 w-full min-h-screen p-4 md:p-10'>
-    <div className='bg-white rounded-md p-4 shadow-sm h-auto md:h-109'>
+    <div className='bg-base-100 rounded-md p-4 shadow-sm h-auto md:h-109'>
       <ExpenseOverview/>
     </div>
 
-    <div className="bg-white rounded-xl p-4 shadow-sm mt-9 px-10 pt-10">
+    <div className="bg-base-100 rounded-xl p-4 shadow-sm mt-9 px-10 pt-10">
         {/* Navigation-like header */}
         <div className="flex justify-between items-center pb-3 mb-4">
           <h1 className="font-medium text-xl">Expense</h1>
           <div className="relative">
-            <button className="bg-gray-100 px-3 pr-5 py-1 rounded-md hover:bg-gray-400 transition duration-200 text-sm">
+            <button className="bg-base-100 px-3 pr-5 py-1 rounded-md hover:bg-gray-500 transition duration-200 text-sm">
               See All
             </button>
             <span className="absolute right-1 mt-[3px] items-center justify-center">

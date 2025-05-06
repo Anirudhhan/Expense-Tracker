@@ -37,11 +37,11 @@ function DashboardPage() {
 
     {/* Charts and Recent Transactions - 2 columns on desktop, 1 column on mobile */}
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-        <div className='bg-white rounded-xl p-4 shadow-sm h-auto md:h-125'>
+        <div className='bg-base-100 rounded-xl p-4 shadow-sm h-auto md:h-125'>
             <RecentTransaction/>
         </div>
 
-        <div className="bg-white p-4 rounded-xl shadow-sm h-auto md:h-125">
+        <div className="bg-base-100 p-4 rounded-xl shadow-sm h-auto md:h-125">
             <Overview/>
         </div>
     </div>        

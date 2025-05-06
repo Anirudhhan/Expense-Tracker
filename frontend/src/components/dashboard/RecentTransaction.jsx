@@ -11,7 +11,7 @@ function RecentTransaction() {
         <div className="flex justify-between items-center">
           <h1 className='font-medium text-xl'>Recent Transactions</h1>
           <div className="relative">
-            <button className="bg-gray-100 px-3 pr-5 py-1 rounded-md hover:bg-gray-400 transition duration-200 text-sm">
+            <button className="bg-base-100 px-3 pr-5 py-1 rounded-md hover:bg-gray-500 transition duration-200 text-sm">
               See All
             </button>
               <span className="absolute right-1 mt-[3px] items-center justify-center"><MoveRight className='w-3 h-6' /></span>
@@ -23,8 +23,8 @@ function RecentTransaction() {
         </div>
       ) : (
         recentTransactions.slice(0, 5).map((transaction) => (
-          <div key={transaction._id} className="group relative flex items-center gap-4 mt-4 p-3 rounded-lg hover:bg-gray-100/60">
-            <div className='w-12 h-12 text-2xl rounded-full bg-gray-300 flex items-center justify-center'>
+          <div key={transaction._id} className="group relative flex items-center gap-4 mt-4 p-3 rounded-lg hover:bg-base-100/60">
+            <div className='w-12 h-12 text-2xl rounded-full bg-base-400 flex items-center justify-center'>
               {transaction.emoji}
             </div>
             <div className="flex flex-col">

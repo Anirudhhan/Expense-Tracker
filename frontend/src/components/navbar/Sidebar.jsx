@@ -86,8 +86,8 @@ function Sidebar() {
     // Sidebar content
     const sidebarContent = (
         <div className='flex flex-col items-center py-20 h-full w-full'>
-            <img src={authUser?.profilePic} alt="Profile" className='rounded-full w-16 h-16 md:w-24 md:h-24 mb-4' />
-            <h1 className='text-xl md:text-2xl font-bold'>{authUser?.fullName}</h1>
+            <img src={authUser?.profilePic} alt="Profile" className='size-28 rounded-full object-cover border-1' />
+            <h1 className='text-xl md:text-2xl font-bold pt-2'>{authUser?.fullName}</h1>
 
             <div className='gap-4 grid w-full max-w-xs px-4 md:px-0 py-8 md:py-10'>
                 <div className="relative w-full">

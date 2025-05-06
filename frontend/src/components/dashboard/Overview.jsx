@@ -73,7 +73,7 @@ function Overview() {
             <div className="flex justify-between items-center mb-2">
                 <h1 className='font-medium text-xl'>Financial Overview</h1>
                 <div className="relative">
-                    <button className="bg-gray-100 px-3 pr-5 py-1 rounded-md hover:bg-gray-200 transition duration-200 text-sm">
+                    <button className="bg-base-100 px-3 pr-5 py-1 rounded-md hover:bg-gray-500 transition duration-200 text-sm">
                     See All
                     </button>
                     <span className="absolute right-1 top-1/2 transform -translate-y-1/2"><MoveRight className='w-3 h-3' /></span>
