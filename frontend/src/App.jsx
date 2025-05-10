@@ -11,12 +11,14 @@ import ExpensePage from "./pages/ExpensePage";
 import SettingsPage from "./pages/SettingsPage";
 import { useExpenseStore } from "./store/useExpenseStore";
 import { Loader } from "lucide-react";
+import { useThemeStore } from "./store/useThemeStore";
 
 const App = () => {
   const { isCheckingAuth, checkAuth, authUser } = useAuthStore();
   const [isMobile, setIsMobile] = useState(false);
 
   const { getDashboardData} = useExpenseStore();
+  const {darkMode } = useThemeStore();
 
   useEffect(() => {
     checkAuth();
@@ -41,7 +43,7 @@ const App = () => {
   )
   
   return (
-    <div className="flex flex-col md:flex-row min-h-screen" data-theme="drk" >
+    <div className="flex flex-col md:flex-row min-h-screen" data-theme = {darkMode? "dark": "light"} >
       {authUser && <Sidebar />}
       <div className={`flex-1 ${authUser && !isMobile ? "md:ml-72" : ""}`}>
         {/* <Navbar /> */}
