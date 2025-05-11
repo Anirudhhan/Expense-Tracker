@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 
-export const useExpenseStore = create((set) => ({
+export const useExpenseStore = create((set, get) => ({
     isRecentTransactionLoading: false,
     dashboardData: null,
     recentTransactions: [],
@@ -32,6 +32,8 @@ export const useExpenseStore = create((set) => ({
             set((state) => ({ recentTransactions: [res.data.expense, ...state.recentTransactions] }));
             set((state) => ({ totalExpenseTransactions: [res.data.expense, ...state.totalExpenseTransactions] }));
             set((state) => ({ totalIncomeTransactions: [res.data.expense, ...state.totalIncomeTransactions] }));
+
+            get().getDashboardData();
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -61,6 +63,8 @@ export const useExpenseStore = create((set) => ({
                   transaction._id === data._id ? res.data.expense : transaction
                 )
               }));
+
+            get().getDashboardData();
               
         } catch (error) {
             toast.error(error.response.data.message);
@@ -75,6 +79,9 @@ export const useExpenseStore = create((set) => ({
             set((state) => ({ totalIncomeTransactions: state.totalIncomeTransactions.filter(transaction => transaction._id !== id) }));
             set((state) => ({ totalExpenseTransactions: state.totalExpenseTransactions.filter(transaction => transaction._id !== id) }));
             toast.success(res.data.message);
+
+            get().getDashboardData();
+
         } catch (error) {
             toast.error(error.response.data.message);
         } finally {
