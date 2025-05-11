@@ -85,9 +85,9 @@ function LoginPage() {
               </button>
               
               {/* TODO: Implement this later */}
-              <button className='btn w-full border-1 mt-4'>
+              {/* <button className='btn w-full border-1 mt-4'>
                   Sign in with Google
-              </button>
+              </button> */}
             </form>
 
             <div className="text-center">

@@ -48,7 +48,7 @@ function SignUpPage() {
             return;
         } 
 
-        signUp(formData)
+        signUp(formData);
       };
 
   return (
@@ -196,9 +196,9 @@ function SignUpPage() {
               </button>
               
               {/* TODO: Implement this later */}
-              <button className='btn w-full border-1 mt-4'>
+              {/* <button className='btn w-full border-1 mt-4'>
                   Sign Up with Google
-              </button>
+              </button> */}
             </form>
 
             <div className="text-center">
