@@ -7,6 +7,7 @@ function RecentTransaction() {
     const { isRecentTransactionLoading, recentTransactions } = useExpenseStore();
 
   return (
+    
     <div className='px-4'>
         <div className="flex justify-between items-center">
           <h1 className='font-medium text-xl'>Recent Transactions</h1>

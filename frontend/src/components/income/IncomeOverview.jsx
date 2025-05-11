@@ -60,7 +60,7 @@ function IncomeOverview() {
       <AddEntryModal ref={addEntryModalRef} type="income" name="Add Income" />
 
       {/* Added fixed height to container div */}
-      <div className="h-88 mt-6">
+      <div className="h-70 sm:h-88 mt-6">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}

@@ -5,7 +5,7 @@ import { MoveRight } from 'lucide-react'
 
 function ExpensePage() {
   return (
-    <div className='bg-black/5 w-full min-h-screen p-4 md:p-10'>
+    <div className='bg-black/5 w-full min-h-screen p-4 md:p-10 mt-12 sm:mt-0'>
     <div className='bg-base-100 rounded-md p-4 shadow-sm h-auto md:h-109'>
       <ExpenseOverview/>
     </div>

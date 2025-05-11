@@ -10,7 +10,7 @@ function DashboardPage() {
   const { dashboardData } = useExpenseStore();
 
   return (
-<div className='bg-black/5 w-full min-h-screen p-4 md:p-10'>
+<div className='bg-black/5 w-full min-h-screen p-4 md:p-10 mt-12 sm:mt-0'>
     {/* Info Cards - 3 columns on desktop, 1 column on mobile */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-10 my-4 md:my-6">
         <InfoCard 
