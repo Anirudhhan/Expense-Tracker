@@ -14,7 +14,7 @@ import { Loader } from "lucide-react";
 import { useThemeStore } from "./store/useThemeStore";
 
 const App = () => {
-  const { isCheckingAuth, checkAuth, authUser,loggedIn } = useAuthStore();
+  const { isCheckingAuth, checkAuth, authUser, loggedIn } = useAuthStore();
   const [isMobile, setIsMobile] = useState(false);
 
   const { getDashboardData} = useExpenseStore();
@@ -22,7 +22,7 @@ const App = () => {
 
   useEffect(() => {
     checkAuth();
-    if (loggedIn){getDashboardData();}
+    getDashboardData();
     
     // Check for mobile screen size
     const checkIsMobile = () => {
