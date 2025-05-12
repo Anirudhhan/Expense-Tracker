@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
+import { useAuthStore } from "./useAuthStore.js";
 
 export const useExpenseStore = create((set, get) => ({
     isRecentTransactionLoading: false,
@@ -13,6 +14,8 @@ export const useExpenseStore = create((set, get) => ({
     getDashboardData: async () => {
         set({ isRecentTransactionLoading: true });
         try {
+            const { loggedIn } = useAuthStore.getState();
+            if (!loggedIn) return;
             const res = await axiosInstance.get("/dashboard");
             set({ dashboardData: res.data, 
                 recentTransactions: res.data.recentTransactions,
