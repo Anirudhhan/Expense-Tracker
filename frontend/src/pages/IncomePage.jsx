@@ -15,7 +15,7 @@ function IncomePage() {
         <div className="flex justify-between items-center pb-3 mb-4">
           <h1 className="font-medium text-xl">Incomes</h1>
           <div className="relative">
-            <button className="bg-base-100 px-3 pr-5 py-1 rounded-md hover:bg-gray-500 transition duration-200 text-sm">
+            <button className="bg-base-100 px-3 pr-5 py-1 rounded-md hover:bg-base-300 transition duration-200 text-sm">
               See All
             </button>
             <span className="absolute right-1 mt-[3px] items-center justify-center">

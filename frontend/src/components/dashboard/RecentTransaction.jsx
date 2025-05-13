@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useExpenseStore } from '../../store/useExpenseStore';
 import {Loader, MoveRight} from 'lucide-react';
+import SeeAllModal from '../modals/SeeAllModal';
 
 
 function RecentTransaction() {
     const { isRecentTransactionLoading, recentTransactions } = useExpenseStore();
+    const [ isModalOpen, setIsModalOpen ] = useState(false);
 
   return (
     
     <div className='px-4'>
         <div className="flex justify-between items-center">
           <h1 className='font-medium text-xl'>Recent Transactions</h1>
-          <div className="relative">
-            <button className="bg-base-100 px-3 pr-5 py-1 rounded-md hover:bg-gray-500 transition duration-200 text-sm">
+          <div className="relative cursor-pointer" onClick={() => {setIsModalOpen(!isModalOpen)}}>
+            <button className="cursor-pointer bg-base-100 px-3 pr-5 py-1 rounded-md hover:bg-base-300 transition duration-200 text-sm">
               See All
             </button>
-              <span className="absolute right-1 mt-[3px] items-center justify-center"><MoveRight className='w-3 h-6' /></span>
+              <span className="absolute right-1 mt-[3px] items-center justify-center "><MoveRight className='w-3 h-6' /></span>
           </div>
         </div>
         {isRecentTransactionLoading ? (
@@ -43,8 +45,17 @@ function RecentTransaction() {
                 </div>
               )
             }
+
           </div>
         ))
+      )}
+      {isModalOpen && (
+        <SeeAllModal 
+        title="Recent Transactions"
+        closeModal={setIsModalOpen}
+        transactions={recentTransactions}
+        />
+
       )}
 
     </div>
