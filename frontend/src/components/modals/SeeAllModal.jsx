@@ -1,10 +1,23 @@
 import React from 'react';
 
 function SeeAllModal(props) {
+  // Function to close modal when clicking outside
+  const handleBackgroundClick = (e) => {
+    if (e.target === e.currentTarget) {
+      props.closeModal(false);
+    }
+  };
+
   return (
     <div>
-      <div className='fixed inset-0 bg-black/40 flex items-center justify-center z-50'>
-        <div className="bg-base-100 rounded-lg shadow-lg md:max-w-2xl max-w-[350px] w-full h-9/12 flex flex-col overflow-hidden">
+      <div
+        className='fixed inset-0 bg-black/40 flex items-center justify-center z-50'
+        onClick={handleBackgroundClick}
+      >
+        <div
+          className="bg-base-100 rounded-lg shadow-lg md:max-w-2xl max-w-[350px] w-full h-9/12 flex flex-col overflow-hidden"
+          onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+        >
           <div className="bg-base-100 px-6 py-4 flex justify-between items-center">
             <h2 className="text-xl font-medium">{props.title}</h2>
             <button
@@ -17,7 +30,6 @@ function SeeAllModal(props) {
 
           {/* Scrollable content area with its own padding */}
           <div className="overflow-y-auto flex-1 px-6 ">
-            {/* Render transactions */}
             {props.transactions.map((transaction) => (
               <div
                 key={transaction._id}
