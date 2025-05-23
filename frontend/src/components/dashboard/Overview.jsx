@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MoveRight } from 'lucide-react';   
+import { MoveRight, PieChart as PieChartIcon } from 'lucide-react';   
 import { useExpenseStore } from '../../store/useExpenseStore';
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
 
@@ -67,6 +67,9 @@ function Overview() {
     const onPieEnter = (_, index) => {
         setActiveIndex(index);
     };
+
+    // Check if all amounts are zero (no data)
+    const hasData = data.some(item => item.Amount > 0);
     
     return (
         <div className="h-full w-full flex flex-col">
@@ -81,28 +84,38 @@ function Overview() {
             </div>
 
             <div className="flex-1 w-full flex items-center justify-center">
-                <ResponsiveContainer width="100%" height="100%" minHeight={320}>
-                    <PieChart>
-                        <Pie
-                            activeIndex={activeIndex}
-                            activeShape={renderActiveShape}
-                            data={data}
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={80}
-                            outerRadius={110}
-                            dataKey="Amount"
-                            onMouseEnter={onPieEnter}
-                        >
-                            {data.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.color} />
-                            ))}
-                        </Pie>
-                    </PieChart>
-                </ResponsiveContainer>
+                {!hasData ? (
+                    <div className="flex flex-col items-center justify-center py-12">
+                        <PieChartIcon className='w-16 h-16 text-gray-400 mb-4' />
+                        <h3 className='text-lg font-medium text-gray-600 mb-2'>No Financial Data</h3>
+                        <p className='text-sm text-gray-500 text-center max-w-xs'>
+                            Add some income or expenses to see your financial overview chart.
+                        </p>
+                    </div>
+                ) : (
+                    <ResponsiveContainer width="100%" height="100%" minHeight={320}>
+                        <PieChart>
+                            <Pie
+                                activeIndex={activeIndex}
+                                activeShape={renderActiveShape}
+                                data={data}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={80}
+                                outerRadius={110}
+                                dataKey="Amount"
+                                onMouseEnter={onPieEnter}
+                            >
+                                {data.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={entry.color} />
+                                ))}
+                            </Pie>
+                        </PieChart>
+                    </ResponsiveContainer>
+                )}
             </div>
         </div>
     )
 }
 
-export default Overview
+export default Overview;

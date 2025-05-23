@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useExpenseStore } from '../../store/useExpenseStore';
-import {Loader, MoveRight} from 'lucide-react';
+import {Loader, MoveRight, Receipt} from 'lucide-react';
 import SeeAllModal from '../modals/SeeAllModal';
 
 
@@ -23,6 +23,14 @@ function RecentTransaction() {
         {isRecentTransactionLoading ? (
         <div className="content-center flex justify-center items-center h-full mt-35">
           <Loader className='animate-spin w-10 h-10 ' />
+        </div>
+      ) : recentTransactions.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-12 sm:mt-22">
+          <Receipt className='w-16 h-16 text-gray-400 mb-4' />
+          <h3 className='text-lg font-medium text-gray-600 mb-2'>No Transactions Yet</h3>
+          <p className='text-sm text-gray-500 text-center max-w-xs'>
+            Start tracking your expenses and income to see your recent transactions here.
+          </p>
         </div>
       ) : (
         recentTransactions.slice(0, 5).map((transaction) => (

@@ -69,6 +69,9 @@ const IncomeExpenseChart = () => {
     return { totalIncome, totalExpense, netBalance };
   }, [chartData]);
 
+  // Check if there's any data to display
+  const hasData = totalIncomeTransactions.length > 0 || totalExpenseTransactions.length > 0;
+
   const formatPeriodLabel = (period) => {
     if (timeRange === 'daily') {
       return new Date(period).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -118,165 +121,163 @@ const IncomeExpenseChart = () => {
         <h1 className="font-medium text-xl">Income vs Expenses</h1>
       </div>
 
-      {/* Chart */}
-      <div className="sm:h-130 h-60">
-        <ResponsiveContainer width="100%" height="100%">
-          {chartType === "bar" ? (
-            <BarChart
-              data={chartData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis
-                dataKey="period"
-                tickFormatter={formatPeriodLabel}
-                stroke="#6b7280"
-                fontSize={12}
-              />
-              <YAxis
-                stroke="#6b7280"
-                fontSize={12}
-                tickFormatter={(value) => `₹${value.toLocaleString()}`}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Bar
-                dataKey="income"
-                name="Income"
-                fill="url(#incomeGradient)"
-                radius={[4, 4, 0, 0]}
-              />
-              <Bar
-                dataKey="expense"
-                name="Expense"
-                fill="url(#expenseGradient)"
-                radius={[4, 4, 0, 0]}
-              />
-              <defs>
-                <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#10b981" />
-                  <stop offset="100%" stopColor="#059669" />
-                </linearGradient>
-                <linearGradient
-                  id="expenseGradient"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop offset="0%" stopColor="#ef4444" />
-                  <stop offset="100%" stopColor="#dc2626" />
-                </linearGradient>
-              </defs>
-            </BarChart>
-          ) : chartType === "line" ? (
-            <LineChart
-              data={chartData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis
-                dataKey="period"
-                tickFormatter={formatPeriodLabel}
-                stroke="#6b7280"
-                fontSize={12}
-              />
-              <YAxis
-                stroke="#6b7280"
-                fontSize={12}
-                tickFormatter={(value) => `₹${value.toLocaleString()}`}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="income"
-                name="Income"
-                stroke="#10b981"
-                strokeWidth={3}
-                dot={{ fill: "#10b981", strokeWidth: 2, r: 6 }}
-                activeDot={{ r: 8, stroke: "#10b981", strokeWidth: 2 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="expense"
-                name="Expense"
-                stroke="#ef4444"
-                strokeWidth={3}
-                dot={{ fill: "#ef4444", strokeWidth: 2, r: 6 }}
-                activeDot={{ r: 8, stroke: "#ef4444", strokeWidth: 2 }}
-              />
-            </LineChart>
-          ) : (
-            <AreaChart
-              data={chartData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis
-                dataKey="period"
-                tickFormatter={formatPeriodLabel}
-                stroke="#6b7280"
-                fontSize={12}
-              />
-              <YAxis
-                stroke="#6b7280"
-                fontSize={12}
-                tickFormatter={(value) => `₹${value.toLocaleString()}`}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Area
-                type="monotone"
-                dataKey="income"
-                name="Income"
-                stackId="1"
-                stroke="#10b981"
-                fill="url(#incomeAreaGradient)"
-              />
-              <Area
-                type="monotone"
-                dataKey="expense"
-                name="Expense"
-                stackId="2"
-                stroke="#ef4444"
-                fill="url(#expenseAreaGradient)"
-              />
-              <defs>
-                <linearGradient
-                  id="incomeAreaGradient"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop offset="0%" stopColor="#10b981" stopOpacity={0.8} />
-                  <stop offset="100%" stopColor="#10b981" stopOpacity={0.1} />
-                </linearGradient>
-                <linearGradient
-                  id="expenseAreaGradient"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop offset="0%" stopColor="#ef4444" stopOpacity={0.8} />
-                  <stop offset="100%" stopColor="#ef4444" stopOpacity={0.1} />
-                </linearGradient>
-              </defs>
-            </AreaChart>
-          )}
-        </ResponsiveContainer>
-      </div>
-
-      {/* Empty State */}
-      {chartData.length === 0 && (
-        <div className="text-center py-12">
-          <div className="w-16 h-16 bg-base-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <BarChart3 className="w-8 h-8 " />
-          </div>
-          <p className=" text-lg font-medium">No data available</p>
-          <p className="text-sm">
+      {/* Conditional rendering: Show chart only if there's data */}
+      {hasData ? (
+        <div className="sm:h-130 h-60">
+          <ResponsiveContainer width="100%" height="100%">
+            {chartType === "bar" ? (
+              <BarChart
+                data={chartData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis
+                  dataKey="period"
+                  tickFormatter={formatPeriodLabel}
+                  stroke="#6b7280"
+                  fontSize={12}
+                />
+                <YAxis
+                  stroke="#6b7280"
+                  fontSize={12}
+                  tickFormatter={(value) => `₹${value.toLocaleString()}`}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend />
+                <Bar
+                  dataKey="income"
+                  name="Income"
+                  fill="url(#incomeGradient)"
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar
+                  dataKey="expense"
+                  name="Expense"
+                  fill="url(#expenseGradient)"
+                  radius={[4, 4, 0, 0]}
+                />
+                <defs>
+                  <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10b981" />
+                    <stop offset="100%" stopColor="#059669" />
+                  </linearGradient>
+                  <linearGradient
+                    id="expenseGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop offset="0%" stopColor="#ef4444" />
+                    <stop offset="100%" stopColor="#dc2626" />
+                  </linearGradient>
+                </defs>
+              </BarChart>
+            ) : chartType === "line" ? (
+              <LineChart
+                data={chartData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis
+                  dataKey="period"
+                  tickFormatter={formatPeriodLabel}
+                  stroke="#6b7280"
+                  fontSize={12}
+                />
+                <YAxis
+                  stroke="#6b7280"
+                  fontSize={12}
+                  tickFormatter={(value) => `₹${value.toLocaleString()}`}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="income"
+                  name="Income"
+                  stroke="#10b981"
+                  strokeWidth={3}
+                  dot={{ fill: "#10b981", strokeWidth: 2, r: 6 }}
+                  activeDot={{ r: 8, stroke: "#10b981", strokeWidth: 2 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="expense"
+                  name="Expense"
+                  stroke="#ef4444"
+                  strokeWidth={3}
+                  dot={{ fill: "#ef4444", strokeWidth: 2, r: 6 }}
+                  activeDot={{ r: 8, stroke: "#ef4444", strokeWidth: 2 }}
+                />
+              </LineChart>
+            ) : (
+              <AreaChart
+                data={chartData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis
+                  dataKey="period"
+                  tickFormatter={formatPeriodLabel}
+                  stroke="#6b7280"
+                  fontSize={12}
+                />
+                <YAxis
+                  stroke="#6b7280"
+                  fontSize={12}
+                  tickFormatter={(value) => `₹${value.toLocaleString()}`}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend />
+                <Area
+                  type="monotone"
+                  dataKey="income"
+                  name="Income"
+                  stackId="1"
+                  stroke="#10b981"
+                  fill="url(#incomeAreaGradient)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="expense"
+                  name="Expense"
+                  stackId="2"
+                  stroke="#ef4444"
+                  fill="url(#expenseAreaGradient)"
+                />
+                <defs>
+                  <linearGradient
+                    id="incomeAreaGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.8} />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity={0.1} />
+                  </linearGradient>
+                  <linearGradient
+                    id="expenseAreaGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop offset="0%" stopColor="#ef4444" stopOpacity={0.8} />
+                    <stop offset="100%" stopColor="#ef4444" stopOpacity={0.1} />
+                  </linearGradient>
+                </defs>
+              </AreaChart>
+            )}
+          </ResponsiveContainer>
+        </div>
+      ) : (
+        // Empty State - only show when no data
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <BarChart3 className="w-16 h-16 text-gray-400 mb-4" />
+          <h3 className="text-lg font-medium text-gray-600 mb-2">No data available</h3>
+          <p className="text-sm text-gray-500 max-w-xs mx-auto">
             Add some income or expense entries to see your financial overview
           </p>
         </div>

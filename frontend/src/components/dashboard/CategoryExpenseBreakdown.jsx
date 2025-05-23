@@ -165,174 +165,48 @@ const CategoryExpenseBreakdown = () => {
           </div>
         </div>
         
-        <div className="flex flex-wrap gap-3">
-          {/* View Type Selector */}
-          <select 
-            value={viewType} 
-            onChange={(e) => setViewType(e.target.value)}
-            className="px-3 py-2 border bg-base-300 rounded-lg text-sm focus:outline-none "
-          >
-            <option value="pie">Pie Chart</option>
-            <option value="bar">Bar Chart</option>
-          </select>
-          
-          {/* Time Filter */}
-          <select 
-            value={timeFilter} 
-            onChange={(e) => setTimeFilter(e.target.value)}
-            className="px-3 py-2 border bg-base-300 rounded-lg text-sm focus:outline-none"
-          >
-            <option value="all">All Time</option>
-            <option value="week">Last Week</option>
-            <option value="month">Last Month</option>
-            <option value="quarter">Last Quarter</option>
-            <option value="year">Last Year</option>
-          </select>
-          
-          {/* Sort By */}
-          <select 
-            value={sortBy} 
-            onChange={(e) => setSortBy(e.target.value)}
-            className="px-3 py-2 border bg-base-300 rounded-lg text-sm focus:outline-none "
-          >
-            <option value="amount">Sort by Amount</option>
-            <option value="count">Sort by Count</option>
-            <option value="alphabetical">Sort Alphabetically</option>
-          </select>
-        </div>
+        {/* Only show controls if there's data */}
+        {categoryData.length > 0 && (
+          <div className="flex flex-wrap gap-3">
+            {/* View Type Selector */}
+            <select 
+              value={viewType} 
+              onChange={(e) => setViewType(e.target.value)}
+              className="px-3 py-2 border bg-base-300 rounded-lg text-sm focus:outline-none "
+            >
+              <option value="pie">Pie Chart</option>
+              <option value="bar">Bar Chart</option>
+            </select>
+            
+            {/* Time Filter */}
+            <select 
+              value={timeFilter} 
+              onChange={(e) => setTimeFilter(e.target.value)}
+              className="px-3 py-2 border bg-base-300 rounded-lg text-sm focus:outline-none"
+            >
+              <option value="all">All Time</option>
+              <option value="week">Last Week</option>
+              <option value="month">Last Month</option>
+              <option value="quarter">Last Quarter</option>
+              <option value="year">Last Year</option>
+            </select>
+            
+            {/* Sort By */}
+            <select 
+              value={sortBy} 
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-3 py-2 border bg-base-300 rounded-lg text-sm focus:outline-none "
+            >
+              <option value="amount">Sort by Amount</option>
+              <option value="count">Sort by Count</option>
+              <option value="alphabetical">Sort Alphabetically</option>
+            </select>
+          </div>
+        )}
       </div>
 
-      {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-gradient-to-r  p-4 rounded-lg bg-base-content/5">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-red-500">Total Expenses</p>
-              <p className="text-2xl font-bold text-red-600">${totalExpense.toLocaleString()}</p>
-            </div>
-            <TrendingDown className="w-8 h-8 text-red-500" />
-          </div>
-        </div>
-        
-        <div className="bg-gradient-to-r  p-4 rounded-lg bg-base-content/5">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-blue-400">Categories</p>
-              <p className="text-2xl font-bold text-blue-500">{categoryData.length}</p>
-            </div>
-            <Grid3X3 className="w-8 h-8 text-blue-500" />
-          </div>
-        </div>
-        
-        <div className="bg-gradient-to-r p-4 rounded-lg bg-base-content/5">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-green-400">Avg per Category</p>
-              <p className="text-2xl font-bold text-green-500">
-                ₹{categoryData.length > 0 ? (totalExpense / categoryData.length).toFixed(0) : '0'}
-              </p>
-            </div>
-            <Eye className="w-8 h-8 text-green-500" />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Chart */}
-        <div className="xl:col-span-2">
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              {viewType === 'pie' ? (
-                <PieChart>
-                  <Pie
-                    data={categoryData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={PieLabel}
-                    outerRadius={120}
-                    fill="#8884d8"
-                    dataKey="amount"
-                  >
-                    {categoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip content={<CustomTooltip />} />
-                </PieChart>
-              ) : (
-                <BarChart data={categoryData} margin={{ top: 20, right: 30, left: 20,  }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis 
-                    dataKey="category" 
-                    stroke="#6b7280"
-                    fontSize={12}
-                    angle={-45}
-                    textAnchor="end"
-                    height={100}
-                  />
-                  <YAxis 
-                    stroke="#6b7280"
-                    fontSize={12}
-                    tickFormatter={(value) => `₹${value.toLocaleString()}`}
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="amount" radius={[4, 4, 0, 0]}>
-                    {categoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              )}
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Category List */}
-        <div className="xl:col-span-1">
-          <div className="bg-base-300 rounded-lg p-4 h-80 overflow-y-auto">
-            <h3 className="font-semibold bg-base-300 mb-4 sticky top-0  pb-2">
-              Category Details
-            </h3>
-            <div className="space-y-3">
-              {categoryData.map((category, index) => (
-                <div key={category.category} className=" p-3 rounded-lg border bg-base-content/5">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <div 
-                        className="w-3 h-3 rounded-full" 
-                        style={{ backgroundColor: category.color }}
-                      />
-                      <span className="font-medium  text-sm truncate">
-                        {category.category}
-                      </span>
-                    </div>
-                    <span className="text-xs text-base-content/90 font-medium">
-                      {category.percentage.toFixed(1)}%
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-xs text-base-content/80">
-                    <span>₹{category.amount.toLocaleString()}</span>
-                    <span>{category.count} transaction{category.count !== 1 ? 's' : ''}</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
-                    <div 
-                      className="h-1.5 rounded-full transition-all duration-300"
-                      style={{ 
-                        width: `${category.percentage}%`,
-                        backgroundColor: category.color 
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Empty State */}
-      {categoryData.length === 0 && (
+      {/* Show content only if there's data, otherwise show empty state */}
+      {categoryData.length === 0 ? (
         <div className="text-center py-12">
           <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <BarChart3 className="w-8 h-8 text-gray-400" />
@@ -340,6 +214,137 @@ const CategoryExpenseBreakdown = () => {
           <p className="text-gray-500 text-lg font-medium">No expense data available</p>
           <p className="text-gray-400 text-sm">Add some expense entries to see category breakdown</p>
         </div>
+      ) : (
+        <>
+          {/* Summary Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-gradient-to-r  p-4 rounded-lg bg-base-content/5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-red-500">Total Expenses</p>
+                  <p className="text-2xl font-bold text-red-600">₹{totalExpense.toLocaleString()}</p>
+                </div>
+                <TrendingDown className="w-8 h-8 text-red-500" />
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r  p-4 rounded-lg bg-base-content/5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-blue-400">Categories</p>
+                  <p className="text-2xl font-bold text-blue-500">{categoryData.length}</p>
+                </div>
+                <Grid3X3 className="w-8 h-8 text-blue-500" />
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r p-4 rounded-lg bg-base-content/5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-green-400">Avg per Category</p>
+                  <p className="text-2xl font-bold text-green-500">
+                    ₹{(totalExpense / categoryData.length).toFixed(0)}
+                  </p>
+                </div>
+                <Eye className="w-8 h-8 text-green-500" />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            {/* Chart */}
+            <div className="xl:col-span-2">
+              <div className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  {viewType === 'pie' ? (
+                    <PieChart>
+                      <Pie
+                        data={categoryData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={PieLabel}
+                        outerRadius={120}
+                        fill="#8884d8"
+                        dataKey="amount"
+                      >
+                        {categoryData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip content={<CustomTooltip />} />
+                    </PieChart>
+                  ) : (
+                    <BarChart data={categoryData} margin={{ top: 20, right: 30, left: 20,  }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                      <XAxis 
+                        dataKey="category" 
+                        stroke="#6b7280"
+                        fontSize={12}
+                        angle={-45}
+                        textAnchor="end"
+                        height={100}
+                      />
+                      <YAxis 
+                        stroke="#6b7280"
+                        fontSize={12}
+                        tickFormatter={(value) => `₹${value.toLocaleString()}`}
+                      />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Bar dataKey="amount" radius={[4, 4, 0, 0]}>
+                        {categoryData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  )}
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Category List */}
+            <div className="xl:col-span-1">
+              <div className="bg-base-300 rounded-lg p-4 h-80 overflow-y-auto">
+                <h3 className="font-semibold bg-base-300 mb-4 sticky top-0  pb-2">
+                  Category Details
+                </h3>
+                <div className="space-y-3">
+                  {categoryData.map((category, index) => (
+                    <div key={category.category} className=" p-3 rounded-lg border bg-base-content/5">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <div 
+                            className="w-3 h-3 rounded-full" 
+                            style={{ backgroundColor: category.color }}
+                          />
+                          <span className="font-medium  text-sm truncate">
+                            {category.category}
+                          </span>
+                        </div>
+                        <span className="text-xs text-base-content/90 font-medium">
+                          {category.percentage.toFixed(1)}%
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-xs text-base-content/80">
+                        <span>₹{category.amount.toLocaleString()}</span>
+                        <span>{category.count} transaction{category.count !== 1 ? 's' : ''}</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                        <div 
+                          className="h-1.5 rounded-full transition-all duration-300"
+                          style={{ 
+                            width: `${category.percentage}%`,
+                            backgroundColor: category.color 
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
