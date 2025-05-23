@@ -4,6 +4,7 @@ import { WalletMinimal, BanknoteArrowUp, BanknoteArrowDown } from 'lucide-react'
 import InfoCard from '../components/dashboard/InfoCard';
 import { useExpenseStore } from '../store/useExpenseStore';
 import Overview from '../components/dashboard/Overview';
+import IncomeExpenseChart from '../components/dashboard/IncomeExpenseChart';
 
 
 function DashboardPage() {
@@ -43,6 +44,10 @@ function DashboardPage() {
 
         <div className="bg-base-100 p-4 rounded-xl shadow-sm h-auto md:h-125">
             <Overview/>
+        </div>
+
+        <div className="bg-base-100 p-4 rounded-xl shadow-sm h-auto md:h-125">
+            <IncomeExpenseChart/>
         </div>
     </div>        
 </div>

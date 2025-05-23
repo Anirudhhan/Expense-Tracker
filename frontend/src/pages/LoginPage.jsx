@@ -100,6 +100,7 @@ function LoginPage() {
 
         </div>
 
+        {/* TODO: Implement Illustrainion on SignUp and Login */}
         {/* right side */}
         <div className='flex-1 bg-amber-950 hidden'>
 

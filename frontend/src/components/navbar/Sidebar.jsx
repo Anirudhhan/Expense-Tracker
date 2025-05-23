@@ -168,7 +168,7 @@ const sidebarContent = (
                     ></div>
                     
                     {/* Sidebar */}
-                    <div className="relative bg-black/10 h-full w-64">
+                    <div className="relative bg-base-300 h-full w-64">
                         {sidebarContent}
                     </div>
                 </div>
