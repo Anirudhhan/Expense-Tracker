@@ -25,7 +25,7 @@ function LoginPage() {
   };
 
   return (
-    <div className='h-screen grid lg:grid-cols-2'>
+    <div className='h-screen grid lg:grid-cols-1'>
         {/* left side */}
         <div className='flex flex-col justify-center items-center p-6 sm:p-12'>
           <div className="w-full max-w-md space-y-4">
@@ -102,9 +102,9 @@ function LoginPage() {
 
         {/* TODO: Implement Illustrainion on SignUp and Login */}
         {/* right side */}
-        <div className='flex-1 bg-amber-950 hidden'>
+        {/* <div className='flex-1 bg-amber-950 hidden'>
 
-        </div>
+        </div> */}
 
     </div>
   )

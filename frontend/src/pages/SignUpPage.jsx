@@ -52,7 +52,7 @@ function SignUpPage() {
       };
 
   return (
-    <div className='h-screen grid lg:grid-cols-2'>
+    <div className='h-screen grid lg:grid-cols-1'>
         <div className='flex-1 bg-amber-950 hidden'>
 
         </div>
