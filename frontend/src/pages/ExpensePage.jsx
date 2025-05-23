@@ -30,14 +30,14 @@ function ExpensePage() {
         </div>
 
         {/* Two columns of TotalIncome components */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <div className=" rounded-lg ">
             <TotalExpense start="0" end="5" />
           </div>
           <div className="rounded-lg">
-            <TotalExpense start="5" end="10" />
           </div>
-        </div>
+          </div> */}
+          <TotalExpense start="5" end="10" />
       </div>
       {isModalOpen && (
         <SeeAllModal 
