@@ -92,7 +92,7 @@ const IncomeExpenseChart = () => {
                 style={{ backgroundColor: entry.color }}
               />
               <span className="text-sm text-base-content/80 capitalize">{entry.dataKey}:</span>
-              <span className="font-medium">${entry.value.toLocaleString()}</span>
+              <span className="font-medium">₹{entry.value.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -119,7 +119,7 @@ const IncomeExpenseChart = () => {
       </div>
 
       {/* Chart */}
-      <div className="sm:h-95 h-60">
+      <div className="sm:h-130 h-60">
         <ResponsiveContainer width="100%" height="100%">
           {chartType === "bar" ? (
             <BarChart

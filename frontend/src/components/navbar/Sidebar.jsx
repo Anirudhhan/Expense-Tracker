@@ -139,7 +139,7 @@ const sidebarContent = (
             <hr className='mb-4' />
             <div onClick={() => setDarkMode(!darkMode)} className="flex items-center gap-2 cursor-pointer border py-2 justify-center rounded-lg hover:bg-base-300">
                 {darkMode ? <Sun className="h-5 w-5 text-base-content/400" /> : <Moon className="h-5 w-5 text-base-content/400" />}
-                <p className='text-sm'>Dark Mode</p>
+                <p className='text-sm'>{!darkMode? "Dark Mode" : "Light Mode"}</p>
             </div>
         </div>
 

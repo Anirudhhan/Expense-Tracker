@@ -5,6 +5,7 @@ import InfoCard from '../components/dashboard/InfoCard';
 import { useExpenseStore } from '../store/useExpenseStore';
 import Overview from '../components/dashboard/Overview';
 import IncomeExpenseChart from '../components/dashboard/IncomeExpenseChart';
+import CategoryExpenseBreakdown from '../components/dashboard/CategoryExpenseBreakdown';
 
 
 function DashboardPage() {
@@ -44,12 +45,15 @@ function DashboardPage() {
 
         <div className="bg-base-100 p-4 rounded-xl shadow-sm h-auto md:h-125">
             <Overview/>
-        </div>
-
-        <div className="bg-base-100 p-4 rounded-xl shadow-sm h-auto md:h-125">
-            <IncomeExpenseChart/>
-        </div>
+        </div>       
+        
     </div>        
+        <div className="bg-base-100 rounded-xl shadow-xl sm:my-10 my-4">
+            <IncomeExpenseChart/>
+        </div>        
+        <div className="bg-base-100 rounded-xl shadow-xl sm:my-10 my-4">
+            <CategoryExpenseBreakdown/>
+        </div>
 </div>
   )
 }

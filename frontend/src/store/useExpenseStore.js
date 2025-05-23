@@ -21,7 +21,6 @@ export const useExpenseStore = create((set, get) => ({
                 recentTransactions: res.data.recentTransactions,
             totalIncomeTransactions: res.data.income.transactions,
             totalExpenseTransactions: res.data.expense.transactions },
-            console.log("Total Income tt", res.data.expense.transactions)
         );
         } catch (error) {
             toast.error(error.response.data.message);
