@@ -101,14 +101,14 @@ function SignUpPage() {
             <form onSubmit={handleSubmit}>
               <div className="form-control my-6">
                 
-                <div className="grid lg:grid-cols-2 space-x-4">
+                <div className="grid lg:grid-cols-2 sm:space-x-4">
                   <div className='flex flex-col'>
                     <label htmlFor="" className="label">
                       <span className='font-medium'>Full Name</span>
                     </label>
                     <input
                       type="text"
-                      className={`input input-bordered w-full pl-10`}
+                      className={`input input-bordered w-full `}
                       placeholder="Anirudhhan Ashok"
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
@@ -124,7 +124,7 @@ function SignUpPage() {
                       </div>
                       <input
                         type="email"
-                        className={`input input-bordered w-full pl-10`}
+                        className={`input input-bordered w-full `}
                         placeholder="xyz@example.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -142,7 +142,7 @@ function SignUpPage() {
                   </div>
                   <input
                   type={showPassword ? 'text' : 'password'}
-                  className="input w-full pl-10 input-bordered"
+                  className="input w-full input-bordered"
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -167,7 +167,7 @@ function SignUpPage() {
                 <div className="relative">
                   <input
                   type={showConfirmPassword ? 'text' : 'password'}
-                  className="input w-full pl-10 input-bordered"
+                  className="input w-full input-bordered"
                   placeholder="••••••••"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
