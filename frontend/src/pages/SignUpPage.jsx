@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Activity, Mail, Eye, EyeOff, Lock, Ellipsis, Camera } from "lucide-react";
 import { useAuthStore } from '../store/useAuthStore';
 import toast from "react-hot-toast";
+import SkeletonPreview from '../components/skeleton/SkeletonPreview';
 
 
 function SignUpPage() {
@@ -52,10 +53,7 @@ function SignUpPage() {
       };
 
   return (
-    <div className='h-screen grid lg:grid-cols-1'>
-        <div className='flex-1 bg-amber-950 hidden'>
-
-        </div>
+    <div className='h-screen grid lg:grid-cols-2'>
 
         {/* left side */}
         <div className='flex flex-col justify-center items-center p-6 sm:p-12'>
@@ -209,6 +207,10 @@ function SignUpPage() {
 
           </div>
 
+        </div>
+
+                <div className='flex-1'>
+                <SkeletonPreview/>
         </div>
 
     </div>

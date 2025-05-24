@@ -3,6 +3,7 @@ import { Activity, Mail, Eye, EyeOff, Lock, Ellipsis } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from '../store/useAuthStore';
 import toast from "react-hot-toast";
+import SkeletonPreview from '../components/skeleton/SkeletonPreview';
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +26,7 @@ function LoginPage() {
   };
 
   return (
-    <div className='h-screen grid lg:grid-cols-1'>
+    <div className='h-screen grid lg:grid-cols-2'>
         {/* left side */}
         <div className='flex flex-col justify-center items-center p-6 sm:p-12'>
           <div className="w-full max-w-md space-y-4">
@@ -102,9 +103,9 @@ function LoginPage() {
 
         {/* TODO: Implement Illustrainion on SignUp and Login */}
         {/* right side */}
-        {/* <div className='flex-1 bg-amber-950 hidden'>
-
-        </div> */}
+        <div className='flex-1 '>
+                <SkeletonPreview/>
+        </div>
 
     </div>
   )
